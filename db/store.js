@@ -13,8 +13,8 @@ function postNotes()
 function deleteNotes(id) 
 
 
-module.exports = getNotes(),
-postNotes(),
-deleteNotes();
+module.exports = getNotes,
+postNotes,
+deleteNotes;
 
 
