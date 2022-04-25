@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const fs = require('fs');
-const uniqid = require('uniqid');
+const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const notes = require('../db/db.json');
+
 //to retrieve notes
 router.get('/notes', (req, res) => {
   fs.readFile(notes, (err,data) => {
@@ -15,14 +16,28 @@ router.get('/notes', (req, res) => {
 
 // to post notes
 router.post('/notes', (req, res) => {
-req.body.id = notes.length.toString();
-fs.writeFile
+  const newNotes = req.body
+  newNotes.id = uuidv4();
+  let readData = JSON.parse(fs.readFileSync('../db/db.json', "utf8"));
+
+  readData.push(newNotes);
+
+  fs.writeFile('../db/db.json', JSON.stringify(readData), err => {
+    if (err) { res.sendStatus(404);
+    } else {
+      console.log('Note saved.');
+    }
+})
+res.json(readData);
 });
 
 
 // to delete notes 
 router.delete('/notes/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  let savedNotesId = req.params.id;
+  let readData = JSON.parse(fs.readFileSync('../db/db.json', "utf8"));
+
+  let findData = readData.filter(note => note.id.length !== note)
 });
 
 module.exports = router;
