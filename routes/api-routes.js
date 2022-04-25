@@ -19,11 +19,11 @@ router.get('/notes', (req, res) => {
 router.post('/notes', (req, res) => {
   const newNotes = req.body
   newNotes.id = uuidv4();
-  let readData = JSON.parse(path.join(__dirname,('../db/db.json', "utf8")));
+  let readData = (path.join(__dirname,('../db/db.json', "utf8")));
 
-  readData.push(newNotes);
+  notes.push(newNotes);
 
-  fs.writeFile('../db/db.json', JSON.stringify(readData), err => {
+  fs.writeFile('../db/db.json', JSON.stringify(notes), err => {
     if (err) { res.sendStatus(404);
     } else {
       console.log('Note saved.');
@@ -36,9 +36,10 @@ res.json(readData);
 // to delete notes 
 router.delete('/notes/:id', (req, res) => {
   let savedNotesId = req.params.id;
-  let readData = JSON.parse(path.join(__dirname('../db/db.json', "utf8")));
+  let readData = (path.join(__dirname('../db/db.json', "utf8")));
 
   let findData = readData.filter(note => note.id.length !== note)
 });
+
 
 module.exports = router;
