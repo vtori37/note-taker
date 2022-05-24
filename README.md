@@ -27,7 +27,6 @@ This project can be used to create notes.
 ## Technology
 * HTML5
 * CSS 
-* JS
 * Javascript
 * Express
 * Node.js
